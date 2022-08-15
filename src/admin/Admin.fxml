@@ -90,9 +90,60 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="Admin Section">
+            <Tab text="Course">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="course_table" layoutY="21.0" prefHeight="671.0" prefWidth="1274.0">
+                          <columns>
+                            <TableColumn fx:id="cid_col" prefWidth="75.0" text="CID" />
+                            <TableColumn fx:id="cname_col" prefWidth="367.0" text="Course Name" />
+                              <TableColumn fx:id="lec_col" prefWidth="335.0" text="Lecturer" />
+                              <TableColumn fx:id="cred_col" prefWidth="120.0" text="Credits" />
+                              <TableColumn fx:id="lec_t_col" prefWidth="200.0" text="Lecture(HRS)" />
+                              <TableColumn fx:id="prc_col" prefWidth="170.0" text="Practice(HRS)" />
+                          </columns>
+                           <padding>
+                              <Insets bottom="3.0" left="3.0" right="3.0" />
+                           </padding>
+                        </TableView>
+                        <Label fx:id="greet" layoutX="14.0" prefHeight="23.0" prefWidth="705.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Assigned Students">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox layoutX="-2.0" prefHeight="13.0" prefWidth="1280.0">
+                           <children>
+                              <Label prefHeight="26.0" prefWidth="101.0" text="Enter Course ID:">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="as_cid" promptText="ID">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <Button fx:id="submit" mnemonicParsing="false" onAction="#loadAssignedStudents" text="Submit">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <TableView fx:id="as_table" layoutX="14.0" layoutY="35.0" prefHeight="653.0" prefWidth="630.0">
+                          <columns>
+                            <TableColumn fx:id="as_id" prefWidth="75.0" text="ID" />
+                            <TableColumn fx:id="as_fname" prefWidth="245.0" text="First Name" />
+                              <TableColumn fx:id="as_lname" prefWidth="407.0" text="Last Name" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
               </content>
             </Tab>
         </tabs>

@@ -20,6 +20,13 @@ public class StudentData {
 		this.DOB = new SimpleStringProperty(dob);
 		
 	}
+	
+	public StudentData(String id, String firstname, String lastname) {
+		this.ID = new SimpleStringProperty(id);
+		this.firstName = new SimpleStringProperty(firstname);
+		this.lastName = new SimpleStringProperty(lastname);
+		
+	}
 
 	public StringProperty getID() {
 		return ID;

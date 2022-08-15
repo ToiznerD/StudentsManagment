@@ -42,6 +42,8 @@ public class LoginController implements Initializable{
 	@FXML
 	private Label loginStatus;
 	
+	private int SID;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		if(this.loginModel.isDatabaseConnected()) {
@@ -56,7 +58,8 @@ public class LoginController implements Initializable{
 	@FXML
 	void Login(ActionEvent event) {
 		try {
-			if(this.loginModel.isLogin(this.username.getText(), this.password.getText(), ((option)this.combobox.getValue()).toString())) {
+			this.SID = this.loginModel.isLogin(this.username.getText(), this.password.getText(), ((option)this.combobox.getValue()).toString());
+			if(SID > 0) {
 				Stage stage = (Stage)this.loginButton.getScene().getWindow();
 				stage.close();
 				switch(((option)this.combobox.getValue()).toString()) {
@@ -84,7 +87,7 @@ public class LoginController implements Initializable{
 			Pane studentRoot = (Pane)loader.load(getClass().getResource("/students/studentFXML.fxml").openStream());
 			
 			StudentsController studentsController = (StudentsController)loader.getController();
-			
+			studentsController.setSID(this.SID);
 			Scene scene = new Scene(studentRoot);
 			userStage.setScene(scene);
 			userStage.setTitle("Student Dashboard");
@@ -103,11 +106,12 @@ public class LoginController implements Initializable{
 			Pane adminroot = (Pane)adminLoader.load(getClass().getResource("/admin/Admin.fxml").openStream());
 			
 			AdminController adminController = (AdminController)adminLoader.getController();
-			
 			Scene scene = new Scene(adminroot);
 			adminStage.setScene(scene);
 			adminStage.setTitle("Admin Dashboard");
 			adminStage.setResizable(false);
+			adminController.loadCourses();
+			adminController.loadStudentData(new ActionEvent());
 			adminStage.show();
 		}
 		catch(IOException ex) {

@@ -27,7 +27,7 @@ public class LoginModel {
 		return this.connection != null;
 	}
 	
-	public boolean isLogin(String user, String pass, String opt) throws Exception{
+	public int isLogin(String user, String pass, String opt) throws Exception{
 		PreparedStatement pr = null;
 		ResultSet rs = null;
 		
@@ -41,11 +41,11 @@ public class LoginModel {
 			rs = pr.executeQuery();
 			
 			if(rs.next()) 
-				return true;
-			return false;
+				return rs.getInt(1);
+			return 0;
 		}
 		catch(SQLException ex) {
-			return false;
+			return 0;
 		}
 		finally {
 			pr.close();

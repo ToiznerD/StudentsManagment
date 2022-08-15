@@ -1,8 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<HBox xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
-</HBox>
-
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="students.StudentsController">
+   <children>
+      <TabPane prefHeight="720.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Course">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="student_course" layoutY="21.0" prefHeight="671.0" prefWidth="1274.0">
+                          <columns>
+                            <TableColumn fx:id="cid_col" prefWidth="75.0" text="CID" />
+                            <TableColumn fx:id="cname_col" prefWidth="367.0" text="Course Name" />
+                              <TableColumn fx:id="lec_col" prefWidth="335.0" text="Lecturer" />
+                              <TableColumn fx:id="cred_col" prefWidth="120.0" text="Credits" />
+                              <TableColumn fx:id="lec_t_col" prefWidth="200.0" text="Lecture(HRS)" />
+                              <TableColumn fx:id="prc_col" prefWidth="170.0" text="Practice(HRS)" />
+                          </columns>
+                           <padding>
+                              <Insets bottom="3.0" left="3.0" right="3.0" />
+                           </padding>
+                        </TableView>
+                        <Label fx:id="greet" layoutX="14.0" prefHeight="23.0" prefWidth="705.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Graded Sheet">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="grade_sheet" layoutX="8.0" prefHeight="689.0" prefWidth="323.0">
+                          <columns>
+                            <TableColumn fx:id="course_col" prefWidth="151.0" text="Course" />
+                            <TableColumn fx:id="grade_col" prefWidth="171.0" text="Grade" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
