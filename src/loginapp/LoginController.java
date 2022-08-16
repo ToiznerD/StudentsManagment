@@ -58,10 +58,13 @@ public class LoginController implements Initializable{
 	@FXML
 	void Login(ActionEvent event) {
 		try {
+			//Get login SID
 			this.SID = this.loginModel.isLogin(this.username.getText(), this.password.getText(), ((option)this.combobox.getValue()).toString());
 			if(SID > 0) {
 				Stage stage = (Stage)this.loginButton.getScene().getWindow();
 				stage.close();
+				
+				//Open the relevant stage
 				switch(((option)this.combobox.getValue()).toString()) {
 					case "Admin":
 						adminLogin();
@@ -72,7 +75,7 @@ public class LoginController implements Initializable{
 				}
 			}
 			else {
-				this.loginStatus.setText("Wrong Creditials");
+				this.loginStatus.setText("Wrong Details.");
 			}
 		}
 		catch(Exception localException) {
@@ -82,16 +85,23 @@ public class LoginController implements Initializable{
 	
 	public void studentLogin() {
 		try {
+			//Create student stage
 			Stage userStage = new Stage();
 			FXMLLoader loader = new FXMLLoader();
 			Pane studentRoot = (Pane)loader.load(getClass().getResource("/students/studentFXML.fxml").openStream());
 			
 			StudentsController studentsController = (StudentsController)loader.getController();
-			studentsController.setSID(this.SID);
 			Scene scene = new Scene(studentRoot);
 			userStage.setScene(scene);
 			userStage.setTitle("Student Dashboard");
 			userStage.setResizable(false);
+			
+			//Initialize stage data
+			studentsController.setSID(this.SID);
+			studentsController.setGreet();
+			studentsController.loadStudentCourses();
+			
+			//Show stage
 			userStage.show();
 		}
 		catch(IOException ex) {
@@ -101,6 +111,7 @@ public class LoginController implements Initializable{
 	
 	public void adminLogin() {
 		try {
+			//Create admin stage
 			Stage adminStage = new Stage();
 			FXMLLoader adminLoader = new FXMLLoader();
 			Pane adminroot = (Pane)adminLoader.load(getClass().getResource("/admin/Admin.fxml").openStream());
@@ -110,7 +121,8 @@ public class LoginController implements Initializable{
 			adminStage.setScene(scene);
 			adminStage.setTitle("Admin Dashboard");
 			adminStage.setResizable(false);
-			adminController.loadCourses();
+			
+			//Initialize stage data
 			adminController.loadStudentData(new ActionEvent());
 			adminStage.show();
 		}

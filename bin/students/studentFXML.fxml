@@ -34,7 +34,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Graded Sheet">
+          <Tab onSelectionChanged="#loadStudentGrades" text="Graded Sheet">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

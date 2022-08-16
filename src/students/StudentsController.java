@@ -61,9 +61,6 @@ public class StudentsController implements Initializable{
 	
 	public void setSID(int sid) {
 		this.SID = sid;
-		setGreet();
-		loadStudentCourses();
-		loadStudentGrades();
 	}
 
 	@Override
@@ -72,6 +69,7 @@ public class StudentsController implements Initializable{
 	}
 	
 	public void setGreet() {
+		//Update top label to greet the student
 		String qry = "SELECT fname FROM students WHERE id = ?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -92,6 +90,8 @@ public class StudentsController implements Initializable{
 	}
 	
 	public void loadStudentCourses() {
+		//Load all the courses that student id is assigned to
+		
 		try {
 			Connection connection = dbConnection.getConnection();
 			this.data_courses = FXCollections.observableArrayList();
@@ -106,7 +106,7 @@ public class StudentsController implements Initializable{
 			System.err.println("Error " + e);
 		}
 		
-
+		//Apply values
 		this.cid_col.setCellValueFactory(new PropertyValueFactory<CourseData, String>("CID"));
 		this.cname_col.setCellValueFactory(new PropertyValueFactory<CourseData, String>("Name"));
 		this.lec_col.setCellValueFactory(new PropertyValueFactory<CourseData, String>("Lecturer"));
@@ -114,11 +114,13 @@ public class StudentsController implements Initializable{
 		this.lec_t_col.setCellValueFactory(new PropertyValueFactory<CourseData, String>("Lecture"));
 		this.prc_col.setCellValueFactory(new PropertyValueFactory<CourseData, String>("Practice"));
 		
+		//Show data
 		this.student_course.setItems(null);
 		this.student_course.setItems(this.data_courses);
 	}
 	
 	public void loadStudentGrades() {
+		//Show all the available grades for the student
 		
 		try {
 			Connection connection = dbConnection.getConnection();
@@ -134,9 +136,11 @@ public class StudentsController implements Initializable{
 			e.printStackTrace();
 		}
 		
+		//Apply values
 		this.course_col.setCellValueFactory(new PropertyValueFactory<GradeData, String>("Name"));
 		this.grade_col.setCellValueFactory(new PropertyValueFactory<GradeData, String>("Grade"));
 		
+		//Show data
 		this.grade_sheet.setItems(null);
 		this.grade_sheet.setItems(data_grades);
 	}

@@ -109,6 +109,8 @@ public class AdminController implements Initializable{
 	
 	@FXML
 	public void loadStudentData(ActionEvent event) {
+		//Load all the students from the DB
+		
 		try {
 			Connection conn = dbConnection.getConnection();
 			this.data = FXCollections.observableArrayList();
@@ -122,12 +124,14 @@ public class AdminController implements Initializable{
 			System.err.println("Error " + e);
 		}
 		
+		//Apply values
 		this.idcolumn.setCellValueFactory(new PropertyValueFactory<StudentData, String>("ID"));
 		this.firstnamecolumn.setCellValueFactory(new PropertyValueFactory<StudentData, String>("firstName"));
 		this.lastnamecolumn.setCellValueFactory(new PropertyValueFactory<StudentData, String>("lastName"));
 		this.emailcolumn.setCellValueFactory(new PropertyValueFactory<StudentData, String>("email"));
 		this.dobcolumn.setCellValueFactory(new PropertyValueFactory<StudentData, String>("DOB"));
 		
+		//Show data
 		this.studenttable.setItems(null);
 		this.studenttable.setItems(this.data);
 		
@@ -135,11 +139,15 @@ public class AdminController implements Initializable{
 	
 	@FXML
 	private void addStudent(ActionEvent event) {
+		//Add new student to DB
+		
 		String query = "INSERT INTO students(id,fname,lname,email,DOB) VALUES (?,?,?,?,?)";
 		
 		try {
 			Connection conn = dbConnection.getConnection();
 			PreparedStatement stmt = conn.prepareStatement(query);
+			
+			//Get values
 			stmt.setString(1, this.id.getText());
 			stmt.setString(2, this.firstname.getText());
 			stmt.setString(3, this.lastname.getText());
@@ -147,7 +155,10 @@ public class AdminController implements Initializable{
 			stmt.setString(5, this.dob.getEditor().getText());
 			
 			stmt.execute();
+			
 			clearFields(new ActionEvent());
+			
+			//Close connection & load new students data
 			stmt.close();
 			conn.close();
 			loadStudentData(new ActionEvent());
@@ -167,6 +178,7 @@ public class AdminController implements Initializable{
 	}
 	
 	public void loadCourses() {
+		//Load all courses data exist in the system
 		try {
 			Connection connection = dbConnection.getConnection();
 			this.data_courses = FXCollections.observableArrayList();
@@ -180,7 +192,7 @@ public class AdminController implements Initializable{
 			System.err.println("Error " + e);
 		}
 		
-
+		//Apply values
 		this.cid_col.setCellValueFactory(new PropertyValueFactory<CourseData, String>("CID"));
 		this.cname_col.setCellValueFactory(new PropertyValueFactory<CourseData, String>("Name"));
 		this.lec_col.setCellValueFactory(new PropertyValueFactory<CourseData, String>("Lecturer"));
@@ -188,12 +200,15 @@ public class AdminController implements Initializable{
 		this.lec_t_col.setCellValueFactory(new PropertyValueFactory<CourseData, String>("Lecture"));
 		this.prc_col.setCellValueFactory(new PropertyValueFactory<CourseData, String>("Practice"));
 		
+		//Show data
 		this.course_table.setItems(null);
 		this.course_table.setItems(this.data_courses);
 	}
 	
 	@FXML
 	private void loadAssignedStudents(ActionEvent event) {
+		//Show all the students that have been signed to specific course
+		
 		int cid = Integer.valueOf(as_cid.getText());
 		String query = "SELECT * FROM students S, student_course SC WHERE S.id = SC.SID AND SC.CID = ?";
 		try {
@@ -210,10 +225,12 @@ public class AdminController implements Initializable{
 			System.err.println("Error " + e);
 		}
 		
+		//Apply values
 		this.as_id.setCellValueFactory(new PropertyValueFactory<StudentData, String>("ID"));
 		this.as_fname.setCellValueFactory(new PropertyValueFactory<StudentData, String>("firstName"));
 		this.as_lname.setCellValueFactory(new PropertyValueFactory<StudentData, String>("lastName"));
 		
+		//Show data
 		this.as_table.setItems(null);
 		this.as_table.setItems(this.as_data);
 	}
