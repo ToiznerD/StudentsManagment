@@ -12,7 +12,7 @@
    <children>
       <TabPane prefHeight="720.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Course">
+          <Tab onSelectionChanged="#loadStudentCourses" text="Course">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -47,6 +47,26 @@
                      </children></AnchorPane>
             </content>
           </Tab>
+            <Tab onSelectionChanged="#loadAvailableCourses" text="Available Courses">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="available_courses" layoutY="24.0" prefHeight="668.0" prefWidth="1280.0">
+                           <columns>
+                              <TableColumn fx:id="ac_cid_col" prefWidth="59.19998246431351" text="CID" />
+                              <TableColumn fx:id="ac_cname_col" prefWidth="343.20002365112305" text="Course Name" />
+                              <TableColumn fx:id="ac_lec_col" prefWidth="267.20001220703125" text="Lecturer" />
+                              <TableColumn fx:id="ac_cred_col" prefWidth="86.39996337890625" text="Credits" />
+                              <TableColumn fx:id="ac_lec_t_col" prefWidth="168.00006103515625" text="Lecture(HRS)" />
+                              <TableColumn fx:id="ac_prc_col" prefWidth="194.4000244140625" text="Practice(HRS)" />
+                              <TableColumn fx:id="ac_assign_col" prefWidth="156.0" text="Assign" />
+                           </columns>
+                        </TableView>
+                        <Label fx:id="greet1" prefHeight="23.0" prefWidth="705.0" text="This are the available courses in school:" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
         </tabs>
       </TabPane>
    </children>

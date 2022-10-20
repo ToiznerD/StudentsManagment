@@ -26,6 +26,27 @@ public class StudentsController implements Initializable{
 	private TableView<GradeData> grade_sheet;
 	
 	@FXML
+	private TableView<CourseData> available_courses;
+	
+	@FXML
+	private TableColumn<CourseData, String> ac_cid_col;
+	
+	@FXML
+	private TableColumn<CourseData, String> ac_cname_col;
+	
+	@FXML
+	private TableColumn<CourseData, String> ac_lec_col;
+	
+	@FXML
+	private TableColumn<CourseData, String> ac_cred_col;
+	
+	@FXML
+	private TableColumn<CourseData, String> ac_lec_t_col;
+	
+	@FXML
+	private TableColumn<CourseData, String> ac_prc_col;
+	
+	@FXML
 	private TableColumn<CourseData, String> cid_col;
 	
 	@FXML
@@ -145,4 +166,33 @@ public class StudentsController implements Initializable{
 		this.grade_sheet.setItems(data_grades);
 	}
 	
+	public void loadAvailableCourses() {
+		//Present the list of courses the student may assign to
+		try {
+			Connection connection = dbConnection.getConnection();
+			this.data_courses = FXCollections.observableArrayList();
+			String qry = "SELECT * FROM course C WHERE NOT EXISTS (SELECT * FROM student_course SC WHERE SC.CID = C.CID AND SC.SID = ?)";
+			PreparedStatement ps = connection.prepareStatement(qry);
+			ps.setInt(1, SID);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				this.data_courses.add(new CourseData(rs.getString(1), rs.getString(2),	rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));
+			}
+		} catch(SQLException e) {
+			System.err.println("Error " + e);
+		}
+		
+		//Apply values
+		this.ac_cid_col.setCellValueFactory(new PropertyValueFactory<CourseData, String>("CID"));
+		this.ac_cname_col.setCellValueFactory(new PropertyValueFactory<CourseData, String>("Name"));
+		this.ac_lec_col.setCellValueFactory(new PropertyValueFactory<CourseData, String>("Lecturer"));
+		this.ac_cred_col.setCellValueFactory(new PropertyValueFactory<CourseData, String>("Credits"));
+		this.ac_lec_t_col.setCellValueFactory(new PropertyValueFactory<CourseData, String>("Lecture"));
+		this.ac_prc_col.setCellValueFactory(new PropertyValueFactory<CourseData, String>("Practice"));
+		
+		
+		//Show data
+		this.available_courses.setItems(null);
+		this.available_courses.setItems(this.data_courses);
+	}
 }
